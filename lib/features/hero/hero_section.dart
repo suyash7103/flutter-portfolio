@@ -14,22 +14,55 @@ class HeroSection extends StatelessWidget {
         bool isMobile = sizingInformation.deviceScreenType == DeviceScreenType.mobile;
         
         return Container(
-          height: MediaQuery.of(context).size.height * 0.9,
+          constraints: BoxConstraints(
+            minHeight: isMobile ? 0 : MediaQuery.of(context).size.height * 0.9,
+          ),
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 24 : 100),
-          child: Flex(
-            direction: isMobile ? Axis.vertical : Axis.horizontal,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.center,
-            children: [
-              if (isMobile) _buildProfileImage().animate().fade(duration: 800.ms, curve: Curves.easeOutExpo).scale(begin: const Offset(0.8, 0.8)),
-              if (isMobile) const SizedBox(height: 32),
-              Expanded(
-                flex: isMobile ? 0 : 3,
-                child: Column(
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 24 : 100,
+            vertical: isMobile ? 80 : 0,
+          ),
+          child: isMobile
+              ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    _buildProfileImage().animate().fade(duration: 800.ms, curve: Curves.easeOutExpo).scale(begin: const Offset(0.8, 0.8)),
+                    const SizedBox(height: 48),
+                    _buildTextContent(context, isMobile),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: _buildTextContent(context, isMobile),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: _buildProfileImage()
+                            .animate()
+                            .fade(duration: 1000.ms, curve: Curves.easeOutExpo)
+                            .scale(begin: const Offset(0.8, 0.8))
+                            .slideX(begin: 0.2, end: 0),
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTextContent(BuildContext context, bool isMobile) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      children: [
+
                     Text(
                       "Hi, my name is",
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -86,31 +119,14 @@ class HeroSection extends StatelessWidget {
                         ),
                       ),
                     ).animate(delay: 400.ms).fade(duration: 800.ms, curve: Curves.easeOutExpo).slideY(begin: 0.5, end: 0),
-                  ],
-                ),
-              ),
-              if (!isMobile)
-                Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: _buildProfileImage()
-                        .animate()
-                        .fade(duration: 1000.ms, curve: Curves.easeOutExpo)
-                        .scale(begin: const Offset(0.8, 0.8))
-                        .slideX(begin: 0.2, end: 0),
-                  ),
-                ),
-            ],
-          ),
-        );
-      },
+      ],
     );
   }
 
   Widget _buildProfileImage() {
     return Container(
-      width: 350,
-      height: 350,
+      width: 250,
+      height: 250,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: AppTheme.primary.withOpacity(0.3), width: 2),

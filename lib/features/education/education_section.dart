@@ -29,20 +29,24 @@ class EducationSection extends StatelessWidget {
                     "03.",
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: AppTheme.accent,
+                      fontSize: isMobile ? 24 : 32,
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text(
                     "Education & Certifications",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(width: 24),
-                  Expanded(
-                    child: Container(
-                      height: 1,
-                      color: AppTheme.surface,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontSize: isMobile ? 24 : 32,
                     ),
-                  )
+                  ),
+                  if (!isMobile) const SizedBox(width: 24),
+                  if (!isMobile)
+                    Expanded(
+                      child: Container(
+                        height: 1,
+                        color: AppTheme.surface,
+                      ),
+                    )
                 ],
               ).animate(target: isVisible ? 1 : 0).fade().slideX(begin: -0.2, end: 0),
               const SizedBox(height: 48),
