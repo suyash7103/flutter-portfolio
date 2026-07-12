@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme.dart';
 
 class HeroSection extends StatelessWidget {
@@ -99,25 +100,53 @@ class HeroSection extends StatelessWidget {
                       ).animate(delay: 300.ms).fade(duration: 800.ms, curve: Curves.easeOutExpo).slideY(begin: 0.5, end: 0),
                     ),
                     const SizedBox(height: 48),
-                    ElevatedButton(
-                      onPressed: onExplorePressed ?? () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.primary,
-                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 16,
+                      alignment: isMobile ? WrapAlignment.center : WrapAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          onPressed: onExplorePressed ?? () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppTheme.primary,
+                            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 10,
+                            shadowColor: AppTheme.primary.withOpacity(0.5),
+                          ),
+                          child: Text(
+                            "Explore My Work",
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: AppTheme.background,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
                         ),
-                        elevation: 10,
-                        shadowColor: AppTheme.primary.withOpacity(0.5),
-                      ),
-                      child: Text(
-                        "Explore My Work",
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: AppTheme.background,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2,
+                        OutlinedButton(
+                          onPressed: () async {
+                            final url = Uri.parse("https://drive.google.com/file/d/1lb23GUDufrbGVwW62zIwR9aZQG33W1nw/view?usp=sharing");
+                            if (await canLaunchUrl(url)) await launchUrl(url);
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: AppTheme.primary, width: 2),
+                            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: Text(
+                            "View Resume",
+                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: AppTheme.primary,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ).animate(delay: 400.ms).fade(duration: 800.ms, curve: Curves.easeOutExpo).slideY(begin: 0.5, end: 0),
       ],
     );

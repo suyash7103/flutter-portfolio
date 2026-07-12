@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class CustomCursor extends StatefulWidget {
   final Widget child;
@@ -14,9 +15,14 @@ class _CustomCursorState extends State<CustomCursor> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onHover: (PointerHoverEvent event) {
-        setState(() {
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        if (sizingInformation.deviceScreenType == DeviceScreenType.mobile) {
+          return widget.child;
+        }
+        return MouseRegion(
+          onHover: (PointerHoverEvent event) {
+            setState(() {
           position = event.position;
         });
       },
@@ -62,6 +68,8 @@ class _CustomCursorState extends State<CustomCursor> {
           )
         ],
       ),
+    );
+      },
     );
   }
 }
