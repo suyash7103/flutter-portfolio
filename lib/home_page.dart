@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey _experienceKey = GlobalKey();
 
   @override
   void dispose() {
@@ -38,14 +39,16 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   HeroSection(
                     onExplorePressed: () {
-                      _scrollController.animateTo(
-                        MediaQuery.of(context).size.height * 0.9,
-                        duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeInOutCubic,
-                      );
+                      if (_experienceKey.currentContext != null) {
+                        Scrollable.ensureVisible(
+                          _experienceKey.currentContext!,
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeInOutCubic,
+                        );
+                      }
                     },
                   ),
-                  const ExperienceSection(),
+                  ExperienceSection(key: _experienceKey),
                   const ProjectsSection(),
                   const EducationSection(),
                   const SkillsSection(),
