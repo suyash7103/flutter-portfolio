@@ -55,7 +55,7 @@ class SkillsSection extends StatelessWidget {
                   runSpacing: 24,
                   children: [
                     _buildSkillCard(context, "Languages & Databases", "Dart, Java, Kotlin, MySQL", isVisible, 200),
-                    _buildSkillCard(context, "Frameworks & Cloud", "Flutter, Firebase (Firestore, Crashlytics)", isVisible, 300),
+                    _buildSkillCard(context, "Frameworks & Cloud", "Flutter, Firebase (Firestore, Realtime Database, Authentication, Hosting, Crashlytics)", isVisible, 300),
                     _buildSkillCard(context, "Mobile Dev", "Android, iOS, Google Maps, OTA Updates, Streaming", isVisible, 400),
                     _buildSkillCard(context, "Architecture", "MVVM, Repository Pattern, State Management", isVisible, 500),
                     _buildSkillCard(context, "Networking", "REST APIs, Embedded Device Communication", isVisible, 600),
