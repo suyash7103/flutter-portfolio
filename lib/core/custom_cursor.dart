@@ -11,7 +11,7 @@ class CustomCursor extends StatefulWidget {
 }
 
 class _CustomCursorState extends State<CustomCursor> {
-  Offset position = Offset.zero;
+  Offset position = const Offset(-100, -100);
 
   @override
   Widget build(BuildContext context) {
